@@ -1,9 +1,11 @@
 package com.example.examplemod;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -32,6 +34,9 @@ public class MyItem extends ItemSword {
             return true;
         }
         enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,1200,1));
+        enemy.setFire(600);
+        enemy.setPosition(enemy.posX,enemy.posY +20,enemy.posZ);
+        enemy.worldObj.setBlock((int)enemy.posX,(int)enemy.posY,(int)enemy.posZ, Blocks.glass);
         return true;
     }
 
