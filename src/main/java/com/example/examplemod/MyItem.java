@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -19,17 +21,18 @@ public class MyItem extends ItemSword {
         setTextureName(ExampleMod.MODID+ ":Original_Sword");
 //        setCreativeTab(CreativeTabs.tabTools);
     }
-//
-//    @Override
-//    public boolean hitEntity(ItemStack item, EntityLivingBase enemy,EntityLivingBase attacker) {
-//
-//        if (item == null){
-//            return true;
-//        }
-//        if(!(attacker instanceof EntityPlayer)){
-//            return true;
-//        }
-//        enemy.addPotionEffect();
-//    }
+
+    @Override
+    public boolean hitEntity(ItemStack item, EntityLivingBase enemy,EntityLivingBase attacker) {
+
+        if (item == null){
+            return true;
+        }
+        if(!(attacker instanceof EntityPlayer)){
+            return true;
+        }
+        enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,1200,1));
+        return true;
+    }
 
 }
