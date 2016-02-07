@@ -33,6 +33,6 @@ public class MyItem extends ItemSword {
         }
         enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id,1200,1));
         return true;
-    }
+    }//a
 
 }
