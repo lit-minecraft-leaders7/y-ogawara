@@ -17,6 +17,7 @@ public class ExampleMod {
 
     public static final String MODID = "examplemod";
     public static final String VERSION = "1.0";
+    public static final  Block RAINBOW = new BlockRainbow();
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -41,6 +42,9 @@ public class ExampleMod {
 
 ////////////////課題4/////////////////////////////
         customFood();
+        ///////BlockRainbow////////
+        GameRegistry.registerBlock(RAINBOW,"rainbow");
+        GameRegistry.addShapelessRecipe(new ItemStack(RAINBOW),new ItemStack(Blocks.dirt));
     }
 
 
