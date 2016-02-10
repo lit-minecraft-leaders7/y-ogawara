@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ExampleMod.MODID, version = ExampleMod.VERSION)
 public class ExampleMod {
@@ -48,6 +49,10 @@ public class ExampleMod {
         GameRegistry.addShapelessRecipe(new ItemStack(RAINBOW),new ItemStack(Blocks.dirt));
 ///////SoundBlock///////////////////
         GameRegistry.registerBlock(blocksound,"BlockSound");
+
+
+//////MyRecipe//////////////////
+        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
     }
 
 
