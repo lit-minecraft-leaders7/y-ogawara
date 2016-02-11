@@ -53,6 +53,11 @@ public class ExampleMod {
 
 //////MyRecipe//////////////////
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+
+///////RedStone/////////////////
+        GameRegistry.registerBlock(new BlockRedstoneInput(),"redstone_input");
+        GameRegistry.registerBlock(new BlockRedstoneClock(),"redstone_clock");
+
     }
 
 
