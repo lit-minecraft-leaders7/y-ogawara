@@ -1,14 +1,14 @@
 package com.example.examplemod;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
+
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S27PacketExplosion;
@@ -16,7 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+
 
 import java.util.Random;
 
@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class BlockTouchTNT extends Block {
     //deathEventHandlerで使う、flagの変数
-    public static boolean myTNTflag;
+    public static boolean myTNTFlag;
 
     //普通の配列
     public IIcon[] icons = new IIcon[7];
@@ -77,7 +77,6 @@ public class BlockTouchTNT extends Block {
     public void updateTick(World world, int x, int y, int z, Random random) {
         int metadata = world.getBlockMetadata(x, y, z) + 1;
         world.setBlockMetadataWithNotify(x, y, z, metadata, 2);
-        System.out.println("aaaaaaaaa");
 
         if (metadata == 13) {
              //TNTを松明に置き換えるメソッドの呼び出し
@@ -104,32 +103,23 @@ public class BlockTouchTNT extends Block {
         if (heldItem.getItem() != Items.flint_and_steel) {
             return false;
         }
+        //flagを建てる
+        myTNTFlag = true;
 
-        myTNTflag = true;
-
-
-
-        //遅延処理の呼び出し
-        //world.setBlockMetadataWithNotify(x,y,z,4,2);
         world.scheduleBlockUpdateWithPriority(x,y,z,this,5,100);
-
-
         return true;
-
     }
 
-
-    //ブロックを左クリックした時に呼び出される
-    @Override
-    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player){
-
-        //AutotTouch.AutotTouch(world,x,y,z);
-
-    }
+//    //ブロックを左クリックした時に呼び出される
+//    @Override
+//    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player){
+//    }
     void TNTanimation (World world,int x,int y,int z){
         //ここからTNT爆発のアニメーション
         Explosion explosion = new Explosion(world, null, x + 0.5f, y + 1.1f, z + 0.5f, 5.0f);
+        //爆発した後に火を周りに出すか
         explosion.isFlaming = false;
+        //Blockを壊すか壊さないか
         explosion.isSmoking = false;
         explosion.doExplosionA();
         explosion.doExplosionB(world.isRemote);
@@ -144,7 +134,4 @@ public class BlockTouchTNT extends Block {
         }
         //終わり
     }
-
-
-
 }

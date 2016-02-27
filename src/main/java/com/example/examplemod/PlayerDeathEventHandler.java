@@ -15,9 +15,9 @@ public class PlayerDeathEventHandler {
             }
             if (event.entityLiving instanceof EntityPlayer) {
                 //flagがtrueの時に体力減少を無効化する
-                if (BlockTouchTNT.myTNTflag ==true) {
+                if (BlockTouchTNT.myTNTFlag ==true) {
                     event.setCanceled(true);
-                    BlockTouchTNT.myTNTflag = false;
+                    BlockTouchTNT.myTNTFlag = false;
                 }
             }
         }
