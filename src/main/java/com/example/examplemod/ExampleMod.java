@@ -1,7 +1,11 @@
 package com.example.examplemod;
 
+import com.sun.glass.ui.TouchInputSupport;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -12,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Keyboard;
 
 @Mod(modid = ExampleMod.MODID, version = ExampleMod.VERSION)
 public class ExampleMod {
@@ -19,10 +24,13 @@ public class ExampleMod {
     public static final String MODID = "examplemod";
     public static final String VERSION = "1.0";
     public static final  Block RAINBOW = new BlockRainbow();
-    public static final Block blocksound = new BlockSound();
+    public static final  Block TouchTNT = new BlockTouchTNT();
+    public static final Block blockSound = new BlockSound();
+    public static final KeyBinding LKey = new KeyBinding("key.l", Keyboard.KEY_L, "leveling_switch");
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+
         GameRegistry.addRecipe(new ItemStack(Blocks.diamond_block),
                 "AAA",
                 "AAA",
@@ -39,6 +47,8 @@ public class ExampleMod {
 ///////////////////////課題2//////////////////////////
         GameRegistry.registerBlock(new MyBlock(),"myblock");
 
+
+
 ///////////////////////課題3////////////////////////
         customSword();
 
@@ -48,7 +58,7 @@ public class ExampleMod {
         GameRegistry.registerBlock(RAINBOW,"rainbow");
         GameRegistry.addShapelessRecipe(new ItemStack(RAINBOW),new ItemStack(Blocks.dirt));
 ///////SoundBlock///////////////////
-        GameRegistry.registerBlock(blocksound,"BlockSound");
+        GameRegistry.registerBlock(blockSound,"BlockSound");
 
 
 //////MyRecipe//////////////////
@@ -58,9 +68,18 @@ public class ExampleMod {
         GameRegistry.registerBlock(new BlockRedstoneInput(),"redstone_input");
         GameRegistry.registerBlock(new BlockRedstoneClock(),"redstone_clock");
 //////Snowball/////////////////
+
         GameRegistry.registerItem(new ItemMySnowball(),"snowball");
 //////footprintssand//////////////
         GameRegistry.registerBlock(new FootprintsSand(),"footprintssand");
+        ClientRegistry.registerKeyBinding(LKey);
+
+        FMLCommonHandler.instance().bus().register(new MyKeyInputHandler());
+
+        TTNT();
+
+
+
 
     }
 
@@ -77,6 +96,17 @@ public class ExampleMod {
                 'b', Items.gunpowder);
 
     }
+//    public void customSnowBall(){
+//        Item mySnowBall = new ItemMySnowball();
+//        GameRegistry.registerItem(mySnowBall,"my_snow");
+//
+//        GameRegistry.addRecipe(new ItemStack(mySnowBall,1,50),
+//                "AAA",
+//                "AAA",
+//                "AAA",
+//                'A', new ItemStack(MySnowGet.my_snow));
+//
+//    }
 
     private void customFood() {
         PotionEffect[] onigiri = {
@@ -87,5 +117,16 @@ public class ExampleMod {
         };
 
         GameRegistry.registerItem(new ItemModFood("onigiri",1,0.5f,false, onigiri).setAlwaysEdible(),"onigiri");
+    }
+    void TTNT (){
+        GameRegistry.registerBlock(TouchTNT,"TouchTNT");
+        GameRegistry.addRecipe(new ItemStack(TouchTNT),
+                "BBB",
+                "BAB",
+                "BBB",
+                'A', Blocks.tnt,'B',Blocks.torch);
+        GameRegistry.addShapelessRecipe(new ItemStack(TouchTNT),new ItemStack(Blocks.dirt));
+
+        MinecraftForge.EVENT_BUS.register(new PlayerDeathEventHandler());
     }
 }
